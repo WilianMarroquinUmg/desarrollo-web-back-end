@@ -23,6 +23,30 @@ class User extends Authenticatable
         'password',
     ];
 
+    public static $rules = [
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|min:6|confirmed',
+    ];
+    public static $messages = [
+        'name.required' => 'El nombre es requerido',
+        'name.string' => 'El nombre debe ser una cadena de texto',
+        'name.max' => 'El nombre debe tener un máximo de 255 caracteres',
+        'email.unique' => 'El email ya esta en uso',
+        'email.required' => 'El email es requerido',
+        'email.email' => 'El email debe ser un email válido',
+        'password.required' => 'La contraseña es requerida',
+        'password.min' => 'La contraseña debe tener un mínimo de 6 caracteres',
+        'password.confirmed' => 'Las contraseñas no coinciden',
+    ];
+
+    public static $loginRules = [
+        'email' => 'required|email',
+        'password' => 'required',
+    ];
+
+
+
     /**
      * The attributes that should be hidden for serialization.
      *
