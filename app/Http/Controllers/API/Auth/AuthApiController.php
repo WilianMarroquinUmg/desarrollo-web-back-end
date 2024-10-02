@@ -44,11 +44,11 @@ class AuthApiController extends Controller
                 'email' => ['Las credenciales son incorrectas.'],
             ]);
         }
-        $token = $user->createToken($request->email)->plainTextToken;
+        $token = [
+            'token' => $user->createToken($request->email)->plainTextToken
+        ];
 
-        return response()->json([
-            'access_token' => $token,
-        ], 200);
+        return response()->json($token, 200);
     }
 
     public function logout(Request $request)
