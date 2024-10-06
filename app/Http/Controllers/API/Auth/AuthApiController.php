@@ -48,7 +48,7 @@ class AuthApiController extends Controller
             'token' => $user->createToken($request->email)->plainTextToken
         ];
 
-        return response()->json($token, 200);
+        return response()->json($token, );
     }
 
     public function logout(Request $request)
