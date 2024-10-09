@@ -151,7 +151,7 @@
                                     </svg>
                                 </div>
 
-                                <div class="pt-3 sm:pt-5">
+                                 <div class="pt-3 sm:pt-5">
                                     <h2 class="text-xl font-semibold text-black dark:text-white">Vibrant Ecosystem</h2>
 
                                     <p class="mt-4 text-sm/relaxed">
@@ -161,7 +161,7 @@
                             </div>
                         </div>
                     </main>
-
+1w1qa1
                     <footer class="py-16 text-center text-sm text-black dark:text-white/70">
                         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                     </footer>
@@ -170,5 +170,3 @@
         </div>
     </body>
 </html>
- <!-- Styles -->
- <!-- pendiente de correcion -->
