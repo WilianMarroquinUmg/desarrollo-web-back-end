@@ -17,3 +17,12 @@ Route::prefix('auth')->group(function () {
     Route::post('/password/email', 'App\Http\Controllers\Api\Auth\AuthApiController@sendPasswordResetLinkEmail')->middleware('throttle:5,1')->name('password.email');
     Route::post('/password/reset', 'App\Http\Controllers\Api\Auth\AuthApiController@resetPassword')->name('password.reset');
 });
+
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+
+    Route::apiResource('users', 'App\Http\Controllers\Api\UserApiController');
+
+});
+
+
