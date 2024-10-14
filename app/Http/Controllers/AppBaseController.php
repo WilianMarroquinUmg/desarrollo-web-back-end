@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 
 
-use App\ResponseUtilTrait;
-use Illuminate\Http\Client\Response;
+
+use Illuminate\Support\Facades\Response;
+
+use App\Utils\ResponseUtil;
 
 /**
  * @SWG\Swagger(
@@ -21,7 +23,6 @@ use Illuminate\Http\Client\Response;
 class AppBaseController extends Controller
 {
 
-    Use ResponseUtilTrait;
 
     /**
      * @param string $message
@@ -42,12 +43,13 @@ class AppBaseController extends Controller
     public function sendResponse($result, $message)
     {
 
-        return Response::json($this->makeResponse($message, $result));
+        return Response::json(ResponseUtil::makeResponse($message, $result));
+
     }
 
     public function sendError($error, $code = 404)
     {
-        return Response::json($this->makeError($error), $code);
+        return Response::json(ResponseUtil::makeError($error), $code);
     }
 
     public function sendSuccess($message)

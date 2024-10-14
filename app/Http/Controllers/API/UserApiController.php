@@ -35,7 +35,7 @@ class UserApiController extends AppBaseController
             $users->where('email', 'like', '%' . $request->email . '%');
         }
 
-        return response()->json($users->get());
+        return $this->sendResponse($users->get(), 'Usuarios Listados Exitosamente');
 
     }
 
