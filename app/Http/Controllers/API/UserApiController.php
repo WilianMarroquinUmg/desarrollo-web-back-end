@@ -51,15 +51,11 @@ class UserApiController extends AppBaseController
 
         if (User::create($validatedData)) {
 
-            return response()->json([
-                'message' => 'Usuario Creado Exitosamente '
-            ], 201);
+            return $this->sendResponse([], 'Usuario Creado Exitosamente');
 
         }
 
-        return response()->json([
-            'message', 'Error al crear el usuario'
-        ], 500);
+        return $this->sendError('Error al crear el usuario', 500);
     }
 
     /**
@@ -67,7 +63,17 @@ class UserApiController extends AppBaseController
      */
     public function show(string $id)
     {
-        //
+
+        $user = User::find($id);
+
+        if ($user) {
+
+            return $this->sendResponse($user, 'Usuario Encontrado Exitosamente');
+
+        }
+
+        return $this->sendError('Usuario no encontrado', 404);
+
     }
 
     /**
@@ -75,7 +81,26 @@ class UserApiController extends AppBaseController
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $user = User::find($id);
+
+        if ($user) {
+
+            $validatedData = $request->all();
+
+            if ($request->password) {
+                $validatedData['password'] = Hash::make($validatedData['password']);
+            }
+
+            $user->update($validatedData);
+
+            return $this->sendResponse([], 'Usuario Actualizado Exitosamente');
+
+        }
+
+        return $this->sendError('Usuario no encontrado', 404);
+
+
     }
 
     /**
@@ -83,6 +108,18 @@ class UserApiController extends AppBaseController
      */
     public function destroy(string $id)
     {
-        //
+
+        $user = User::find($id);
+
+        if ($user) {
+
+            $user->delete();
+
+            return $this->sendResponse([], 'Usuario Eliminado Exitosamente');
+
+        }
+
+        return $this->sendError('Usuario no encontrado', 404);
+
     }
 }
