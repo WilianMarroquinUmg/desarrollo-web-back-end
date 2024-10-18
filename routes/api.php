@@ -25,6 +25,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::apiResource('direcciones', 'App\Http\Controllers\Api\DireccionApiController');
 
+    Route::apiResource('residentes', 'App\Http\Controllers\Api\ResidenteApiController');
+
 });
 
 
