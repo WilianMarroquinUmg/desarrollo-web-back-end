@@ -10,7 +10,6 @@ class Residente extends Model
     use HasFactory;
 
     protected $table = 'residentes';
-
     protected $fillable = [
         "primer_nombre",
         "segundo_nombre",
@@ -23,5 +22,22 @@ class Residente extends Model
         "direccion_id",
         "sexo"
     ];
+
+    protected $appends = ['nombre_completo', 'dpi_y_nombre'];
+
+
+    public function getNombreCompletoAttribute()
+    {
+
+        return $this->primer_nombre . ' ' . $this->segundo_nombre . ' ' . $this->tercer_nombre . ' ' . $this->primer_apellido . ' ' . $this->segundo_apellido . ' ' . $this->apellido_casada;
+
+    }
+
+    public function getDpiYNombreAttribute()
+    {
+
+        return $this->dpi . ' - ' . $this->nombre_completo;
+
+    }
 
 }
