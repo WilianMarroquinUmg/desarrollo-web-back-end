@@ -29,6 +29,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::apiResource('tipos-adquisicions', 'App\Http\Controllers\Api\TipoAdquisicionApiController');
 
+    Route::apiResource('paja-aguas', 'App\Http\Controllers\Api\PajaAguaApiController');
+
+    Route::get('paja-aguas/getDetalles/residente{id}', 'App\Http\Controllers\Api\PajaAguaApiController@getDetallesForResidente');
+
+
 });
 
 
