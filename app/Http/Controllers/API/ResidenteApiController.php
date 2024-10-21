@@ -15,7 +15,8 @@ class ResidenteApiController extends AppBaseController
     public function index()
     {
 
-        $residentes = Residente::all();
+        $residentes = Residente::with('direccion')
+        ->get();
 
         return $this->sendResponse($residentes->toArray(), 'Residentes retrieved successfully');
 
@@ -49,7 +50,8 @@ class ResidenteApiController extends AppBaseController
     public function show(string $id)
     {
 
-        $residente = Residente::find($id);
+        $residente = Residente::with('direccion')
+        ->find($id);
 
         if (is_null($residente)) {
             return $this->sendError('Residente not found');

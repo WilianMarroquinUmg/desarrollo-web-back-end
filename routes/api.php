@@ -27,6 +27,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::apiResource('residentes', 'App\Http\Controllers\Api\ResidenteApiController');
 
+    Route::apiResource('tipos-adquisicions', 'App\Http\Controllers\Api\TipoAdquisicionApiController');
+
 });
 
 
