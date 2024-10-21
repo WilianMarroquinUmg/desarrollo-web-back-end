@@ -24,7 +24,7 @@ class Residente extends Model
         "sexo"
     ];
 
-    protected $appends = ['nombre_completo', 'dpi_y_nombre'];
+    protected $appends = ['nombre_completo', 'dpi_y_nombre', 'cantidad_pajas_agua'];
 
 
     public function getNombreCompletoAttribute()
@@ -46,5 +46,14 @@ class Residente extends Model
         return $this->belongsTo(Direccion::class, 'direccion_id');
     }
 
+    public function pajaAguas()
+    {
+        return $this->hasMany(PajaAgua::class, 'residente_id', 'id');
+    }
+
+    public function getCantidadPajasAguaAttribute()
+    {
+        return $this->pajaAguas->count();
+    }
 
 }

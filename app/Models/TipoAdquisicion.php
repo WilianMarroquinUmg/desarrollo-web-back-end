@@ -9,8 +9,8 @@ class TipoAdquisicion extends Model
 {
     use HasFactory;
 
-    protected $table = 'paja_agua_bitacora_tipo_transacciones';
 
+    protected $table = 'paja_agua_bitacora_tipo_transacciones';
     protected $fillable = [
         'nombre',
     ];
