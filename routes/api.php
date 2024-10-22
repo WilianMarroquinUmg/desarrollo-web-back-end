@@ -33,6 +33,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('paja-aguas/getDetalles/residente{id}', 'App\Http\Controllers\Api\PajaAguaApiController@getDetallesForResidente');
 
+    Route::get('paja-aguas/from/residente/{id}', 'App\Http\Controllers\Api\PajaAguaApiController@getPajaAguasFromResidente');
+
+    Route::post('traslados-paja-agua', 'App\Http\Controllers\Api\PajaAguaApiController@trasladarResidente');
+
 
 });
 

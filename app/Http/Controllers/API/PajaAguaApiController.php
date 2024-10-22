@@ -30,13 +30,6 @@ class PajaAguaApiController extends AppBaseController
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -95,36 +88,13 @@ class PajaAguaApiController extends AppBaseController
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 
     public function getDetallesForResidente($id)
@@ -143,6 +113,60 @@ class PajaAguaApiController extends AppBaseController
         }
 
         return $this->sendResponse($residente->toArray(), 'Detalles de paja de agua recuperados correctamente');
+
+    }
+
+    public function trasladarResidente(Request $request)
+    {
+
+        try {
+
+            DB::beginTransaction();
+
+            $pajaAgua = PajaAgua::find($request->paja_agua_id);
+
+            $pajaAgua->update([
+                'residente_id' => $request->nuevo_residente_id,
+            ]);
+
+            $pajaAgua->bitacoras()
+                ->create([
+                    'fecha_registro' => Carbon::now(),
+                    'residente_id' => $request->nuevo_residente_id,
+                    'transaccion_id' => $request->tipo_transaccion_id,
+                    'direccion_id' => $request->direccion_id,
+                    'user_transacciona_id' => auth()->user()->id,
+                    'observaciones' => $request->observaciones,
+                ]);
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return $this->sendError($e);
+
+        }
+
+        return $this->sendResponse($pajaAgua, 'Paja de agua trasladada correctamente');
+
+    }
+
+    public function getPajaAguasFromResidente($id)
+    {
+
+        $pajaAguas = PajaAgua::with('bitacoras')
+            ->where('residente_id', $id)
+            ->get();
+
+        if (!$pajaAguas) {
+
+            return $this->sendError('Pajas de agua no encontradas');
+
+        }
+
+        return $this->sendResponse($pajaAguas, 'Pajas de agua recuperadas correctamente');
 
     }
 
