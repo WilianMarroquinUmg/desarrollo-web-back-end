@@ -18,6 +18,8 @@ class PajaAgua extends Model
         'residente_id',
     ];
 
+    protected $appends = ['correlativo_direccion'];
+
     public function residente(): BelongsTo
     {
         return $this->belongsTo(Residente::class, 'residente_id', 'id');
@@ -26,8 +28,13 @@ class PajaAgua extends Model
 
     public function Bitacoras(): HasMany
     {
-        return $this->hasMany(PajaAguaBitacora::class, 'paja_agua_id', 'id');
+        return $this->hasMany(PajaAguaBitacora::class, 'paja_agua_id', 'id')->orderBy('id', 'desc');
 
+    }
+
+    public function getCorrelativoDireccionAttribute(): string
+    {
+        return $this->correlativo . ' - ' . $this->bitacoras->last()->direccion->nombre;
     }
 
 }
