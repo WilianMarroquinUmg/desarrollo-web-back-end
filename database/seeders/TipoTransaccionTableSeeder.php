@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\TipoAdquisicion;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TipoTransaccionTableSeeder extends Seeder
 {
@@ -14,12 +15,12 @@ class TipoTransaccionTableSeeder extends Seeder
     public function run(): void
     {
 
-        TipoAdquisicion::firstOrCreate([
-            'nombre' => 'Compra',
-        ]);
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        TipoAdquisicion::truncate();
 
         TipoAdquisicion::firstOrCreate([
-            'nombre' => 'Venta',
+            'nombre' => 'Compra',
         ]);
 
         TipoAdquisicion::firstOrCreate([
@@ -29,5 +30,13 @@ class TipoTransaccionTableSeeder extends Seeder
         TipoAdquisicion::firstOrCreate([
             'nombre' => 'Donacion',
         ]);
+
+        TipoAdquisicion::firstOrCreate([
+            'nombre' => 'Primer Dueño (Trabajo en su momento)',
+        ]);
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
     }
+
 }
