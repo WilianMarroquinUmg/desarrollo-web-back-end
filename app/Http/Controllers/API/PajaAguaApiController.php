@@ -76,7 +76,7 @@ class PajaAguaApiController extends AppBaseController
 
         if (!$ultimaPajaAgua) {
 
-            $correlativo = "Paja-" . Carbon::now()->format('Y') . "1";
+            $correlativo = "Paja-" . Carbon::now()->format('Y') . "-1";
 
         } else {
 
