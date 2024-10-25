@@ -26,7 +26,13 @@ class ResidenteTelefonoApiController extends Controller
 
     public function show(string $id)
     {
-        //
+        $residenteTelefono = ResidenteTelefono::find($id);
+
+        if (empty($residenteTelefono)) {
+            return $this->sendError('ResidenteTelefono no encontrado');
+        }
+
+        return $this->sendResponse($residenteTelefono->toArray(), 'ResidenteTelefono obtenido con exito');
     }
 
     public function update(Request $request, string $id)
