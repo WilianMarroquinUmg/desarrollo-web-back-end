@@ -10,4 +10,8 @@ class ResidenteTelefono extends Model
     use HasFactory;
 }
 
-
+protected $table = 'residentes_telefono';
+protected $fillable = [
+    "residente_id",
+    "telefono"
+];
