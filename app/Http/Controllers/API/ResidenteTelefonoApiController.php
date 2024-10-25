@@ -17,41 +17,23 @@ class ResidenteTelefonoApiController extends Controller
         return $this->sendResponse($residenteTelefonos->toArray(), 'ResidenteTelefonos obtenidos con exito');
     }
 
-    public function create()
-    {
-
-    }
-
-
     public function store(Request $request)
     {
-
+        input = $request->all();
+        $residenteTelefono = ResidenteTelefono::create($input);
+        return $this->sendResponse($residenteTelefono->toArray(), 'ResidenteTelefono guardado con exito');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
 
