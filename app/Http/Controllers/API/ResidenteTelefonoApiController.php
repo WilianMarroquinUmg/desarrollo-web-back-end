@@ -10,25 +10,22 @@ class ResidenteTelefonoApiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() JSONResponse
     {
-        //
+       $residenteTelefonos = ResidenteTelefono::all();
+
+        return $this->sendResponse($residenteTelefonos->toArray(), 'ResidenteTelefonos obtenidos con exito');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -39,9 +36,6 @@ class ResidenteTelefonoApiController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
@@ -60,6 +54,6 @@ class ResidenteTelefonoApiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
     }
 }
