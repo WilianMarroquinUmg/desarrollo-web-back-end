@@ -52,6 +52,15 @@ class ResidenteTelefonoApiController extends Controller
 
     public function destroy(string $id)
     {
+        $residenteTelefono = ResidenteTelefono::find($id);
+
+        if (empty($residenteTelefono)) {
+            return $this->sendError('ResidenteTelefono no encontrado');
+        }
+
+        $residenteTelefono->delete();
+
+        return $this->sendSuccess('ResidenteTelefono eliminado con exito');
 
     }
 }
