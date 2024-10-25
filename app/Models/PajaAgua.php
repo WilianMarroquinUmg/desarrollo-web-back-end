@@ -37,4 +37,22 @@ class PajaAgua extends Model
         return $this->correlativo . ' - ' . $this->bitacoras->last()->direccion->nombre;
     }
 
+    public function BitacoraRegistroActual()
+    {
+        return $this->bitacoras->last();
+
+    }
+
+    public function BitacoraRegistroAnterior()
+    {
+        return $this->bitacoras->count() > 1 ? $this->bitacoras->reverse()->values()->get(1) : null;
+
+    }
+
+    public function BitacoraRegistroAntesAnterior()
+    {
+        return $this->bitacoras->count() > 2 ? $this->bitacoras->reverse()->values()->get(2) : null;
+
+    }
+
 }

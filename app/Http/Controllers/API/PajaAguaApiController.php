@@ -6,9 +6,12 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Controllers\Controller;
 use App\Models\PajaAgua;
 use App\Models\Residente;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Spatie\LaravelPdf\Facades\Pdf;
 
 class PajaAguaApiController extends AppBaseController
 {
@@ -169,6 +172,35 @@ class PajaAguaApiController extends AppBaseController
         return $this->sendResponse($pajaAguas, 'Pajas de agua recuperadas correctamente');
 
     }
+
+    public function getCertificado($id)
+    {
+        /**
+         * @var PajaAgua $pajaAgua
+         */
+        $pajaAgua = PajaAgua::find($id);
+
+        if (!$pajaAgua) {
+            return response()->json(['error' => 'Paja de agua no encontrada'], 404);
+        }
+
+        // Definir el directorio y el nombre del archivo PDF
+        $directory = storage_path('app/public/certificados');
+        $filename = 'certificado_' . $pajaAgua->id . '.pdf';
+        $filePath = $directory . '/' . $filename;
+
+        // Crear el directorio si no existe
+        if (!file_exists($directory)) {
+            mkdir($directory, 0755, true); // true para crear directorios anidados
+        }
+
+        Pdf::view('pdf.invoice')->save($filePath);
+
+        $publicPath = Storage::url('public/certificados/' . $filename);
+
+        return $this->sendResponse([$publicPath], 'Certificado generado correctamente');
+    }
+
 
 
 }

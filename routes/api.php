@@ -37,7 +37,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::post('traslados-paja-agua', 'App\Http\Controllers\API\PajaAguaApiController@trasladarResidente');
 
+    Route::get('paja-aguas/get/certificado/{id}', 'App\Http\Controllers\API\PajaAguaApiController@getCertificado');
 
 });
+
 
 
