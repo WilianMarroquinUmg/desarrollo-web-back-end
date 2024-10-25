@@ -9,3 +9,5 @@ class ResidenteTelefono extends Model
 {
     use HasFactory;
 }
+
+
