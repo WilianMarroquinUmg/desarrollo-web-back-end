@@ -9,6 +9,8 @@ use App\Models\Residente;
 
 use App\Models\TipoAdquisicion;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -224,6 +226,7 @@ class PajaAguaApiController extends AppBaseController
         return $this->sendResponse([$publicPath], 'Certificado generado correctamente');
     }
 
+
     public function getCertificadoOtro($id)
     {
         /**
@@ -239,55 +242,55 @@ class PajaAguaApiController extends AppBaseController
         $filename = 'certificado_' . $pajaAgua->BitacoraRegistroActual()->id . '.pdf';
         $filePath = $directory . '/' . $filename;
 
+        // Crear el directorio si no existe
         if (!file_exists($directory)) {
             mkdir($directory, 0755, true);
         }
 
+        // Configurar opciones de DomPDF
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($options);
+
+        // Seleccionar la vista adecuada según el tipo de transacción
+        $viewName = '';
+
         switch ($pajaAgua->BitacoraRegistroActual()->transaccion_id) {
             case TipoAdquisicion::COMPRA:
-                Browsershot::html(view('pdf.CertificadoCompra', ['paja' => $pajaAgua])->render())
-                    ->setNodeBinary('/usr/bin/node') // Ruta de Node.js
-                    ->setNpmBinary('/usr/bin/npm') // Ruta de NPM
-                    ->setChromePath('/usr/bin/chromium-browser') // Ruta de Chromium
-                    ->save($filePath); // Guarda el archivo PDF en el path correcto
+                $viewName = 'pdf.CertificadoCompra';
                 break;
-
             case TipoAdquisicion::HERENCIA:
-                Browsershot::html(view('pdf.CertificadoHerencia', ['paja' => $pajaAgua])->render())
-                    ->setNodeBinary('/usr/bin/node') // Ruta de Node.js
-                    ->setNpmBinary('/usr/bin/npm') // Ruta de NPM
-                    ->setChromePath('/usr/bin/chromium-browser') // Ruta de Chromium
-                    ->save($filePath);
+                $viewName = 'pdf.CertificadoHerencia';
                 break;
-
             case TipoAdquisicion::DONACION:
-                Browsershot::html(view('pdf.CertificadoDonacion', ['paja' => $pajaAgua])->render())
-                    ->setNodeBinary('/usr/bin/node') // Ruta de Node.js
-                    ->setNpmBinary('/usr/bin/npm') // Ruta de NPM
-                    ->setChromePath('/usr/bin/chromium-browser') // Ruta de Chromium
-                    ->save($filePath);
+                $viewName = 'pdf.CertificadoDonacion';
                 break;
-
             case TipoAdquisicion::PRIMER_DUEÑO_TRABAJO_EN_SU_MOMENTO:
-                Browsershot::html(view('pdf.CertificadoAdquisicion', ['paja' => $pajaAgua])->render())
-                    ->setNodeBinary('/usr/bin/node') // Ruta de Node.js
-                    ->setNpmBinary('/usr/bin/npm') // Ruta de NPM
-                    ->setChromePath('/usr/bin/chromium-browser') // Ruta de Chromium
-                    ->save($filePath);
+                $viewName = 'pdf.CertificadoAdquisicion';
                 break;
-
             default:
                 return response()->json(['error' => 'Transacción no válida'], 400);
         }
 
-        $publicPath = Storage::url('public/certificados/' . $filename);
+        // Cargar la vista y renderizar el HTML
+        $html = view($viewName, ['paja' => $pajaAgua])->render();
+        $dompdf->loadHtml($html);
+
+        // (Opcional) Configurar el tamaño y la orientación del papel
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Renderizar el PDF
+        $dompdf->render();
+
+        // Guardar el PDF en el almacenamiento
+        $pdfOutput = $dompdf->output();
+        file_put_contents($filePath, $pdfOutput);
+
+        // Obtener la URL pública del archivo guardado
+        $publicPath = Storage::url('certificados/' . $filename);
 
         return $this->sendResponse([$publicPath], 'Certificado generado correctamente');
     }
-
-
-
-
 
 
 }
