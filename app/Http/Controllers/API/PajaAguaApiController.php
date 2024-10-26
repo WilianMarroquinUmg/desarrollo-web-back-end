@@ -186,7 +186,7 @@ class PajaAguaApiController extends AppBaseController
         }
 
         $directory = storage_path('app/public/certificados');
-        $filename = 'certificado_' . $pajaAgua->id . '.pdf';
+        $filename = 'certificado_' . $pajaAgua->BitacoraRegistroActual()->id . '.pdf';
         $filePath = $directory . '/' . $filename;
 
         if (!file_exists($directory)) {
@@ -196,6 +196,12 @@ class PajaAguaApiController extends AppBaseController
         if($pajaAgua->BitacoraRegistroActual()->transaccion_id == TipoAdquisicion::COMPRA){
 
             Pdf::view('pdf.CertificadoCompra', ['paja' => $pajaAgua])->save($filePath);
+
+        }
+
+        if($pajaAgua->BitacoraRegistroActual()->transaccion_id == TipoAdquisicion::DONACION){
+
+            Pdf::view('pdf.CertificadoDonacion', ['paja' => $pajaAgua])->save($filePath);
 
         }
 

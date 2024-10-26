@@ -7,7 +7,7 @@
 <body>
 <header>
     <h1 style="text-align: center; font-family: 'Times New Roman', serif; font-size: 32px;">
-        CONTRATO DE DONACIÓN DE PAJA DE AGUA
+        CONTRATO DE COMPRA DE PAJA DE AGUA
     </h1>
 </header>
 
