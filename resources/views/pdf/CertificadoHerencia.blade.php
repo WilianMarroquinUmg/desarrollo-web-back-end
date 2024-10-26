@@ -37,20 +37,20 @@
 
         <div class="firma" style="margin-top: 40px;">
             <div style="float: left; width: 45%; text-align: center;">
-                F.________________________________________<br/>
+                F._____________________________<br/>
                 <strong style="font-size: 18px;">{{ $paja->BitacoraRegistroActual()->residente->nombre_completo }}</strong><br/>
                 <em>Adquiriente</em>
             </div>
 
             <div style="float: right; width: 45%; text-align: center;">
-                F.________________________________________<br/>
+                F._____________________________<br/>
                 <strong style="font-size: 18px;">{{ $paja->BitacoraRegistroAnterior()->residente->nombre_completo }}</strong><br/>
                 <em>Heredante</em>
             </div>
         </div>
 
         <div class="datos-administrador" style="margin-top: 60px; text-align: center;">
-            F.________________________________________<br/>
+                F._____________________________<br/>
             <strong style="font-size: 18px;">{{ $paja->BitacoraRegistroActual()->userTransacciona->nombre_completo }}</strong><br/>
             <em>Representante del COCODE</em>
         </div>

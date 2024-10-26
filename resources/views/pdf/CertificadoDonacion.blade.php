@@ -33,13 +33,13 @@
 
         <div class="firma" style="margin-top: 40px;">
             <div style="float: left; width: 45%; text-align: center;">
-                F.____________________________________<br/>
+                F._______________________________<br/>
                 <strong style="font-size: 18px;">{{ $paja->BitacoraRegistroActual()->residente->nombre_completo }}</strong><br/>
                 <em>Beneficiario</em>
             </div>
 
             <div style="float: right; width: 45%; text-align: center;">
-                F.____________________________________<br/>
+                F._______________________________<br/>
                 <strong style="font-size: 18px;">{{ $paja->BitacoraRegistroActual()->userTransacciona->nombre_completo }}</strong><br/>
                 <em>Representante del COCODE</em>
             </div>

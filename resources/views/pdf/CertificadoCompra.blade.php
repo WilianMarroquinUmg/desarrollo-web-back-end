@@ -41,20 +41,20 @@
 
         <div class="firma" style="margin-top: 40px;">
             <div style="float: left; width: 45%; text-align: center;">
-                F.________________________________________<br/>
+                F.____________________________<br/>
                 <strong style="font-size: 18px;">{{ $paja->BitacoraRegistroActual()->residente->nombre_completo }}</strong><br/>
                 <em>Comprador</em>
             </div>
 
             <div style="float: right; width: 45%; text-align: center;">
-                F.________________________________________<br/>
+                F.____________________________<br/>
                 <strong style="font-size: 18px;">{{ $paja->BitacoraRegistroAnterior()->residente->nombre_completo }}</strong><br/>
                 <em>Vendedor</em>
             </div>
         </div>
 
         <div class="datos-administrador" style="margin-top: 60px; text-align: center;">
-            F.________________________________________<br/>
+                F.___________________________<br/>
             <strong style="font-size: 18px;">{{ $paja->BitacoraRegistroActual()->userTransacciona->nombre_completo }}</strong><br/>
             <em>Representante del COCODE</em>
         </div>
