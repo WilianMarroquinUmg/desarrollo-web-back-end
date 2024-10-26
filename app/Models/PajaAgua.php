@@ -39,7 +39,7 @@ class PajaAgua extends Model
 
     public function BitacoraRegistroActual()
     {
-        return $this->bitacoras->last();
+        return $this->Bitacoras()->latest()->first();
 
     }
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PajaAgua;
 use App\Models\Residente;
 
+use App\Models\TipoAdquisicion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -184,17 +185,20 @@ class PajaAguaApiController extends AppBaseController
             return response()->json(['error' => 'Paja de agua no encontrada'], 404);
         }
 
-        // Definir el directorio y el nombre del archivo PDF
         $directory = storage_path('app/public/certificados');
         $filename = 'certificado_' . $pajaAgua->id . '.pdf';
         $filePath = $directory . '/' . $filename;
 
-        // Crear el directorio si no existe
         if (!file_exists($directory)) {
-            mkdir($directory, 0755, true); // true para crear directorios anidados
+            mkdir($directory, 0755, true);
         }
 
-        Pdf::view('pdf.invoice')->save($filePath);
+        if($pajaAgua->BitacoraRegistroActual()->transaccion_id == TipoAdquisicion::COMPRA){
+
+            Pdf::view('pdf.CertificadoCompra', ['paja' => $pajaAgua])->save($filePath);
+
+        }
+
 
         $publicPath = Storage::url('public/certificados/' . $filename);
 
