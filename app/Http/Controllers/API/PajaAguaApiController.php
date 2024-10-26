@@ -211,6 +211,12 @@ class PajaAguaApiController extends AppBaseController
 
         }
 
+        if ($pajaAgua->BitacoraRegistroActual()->transaccion_id == TipoAdquisicion::PRIMER_DUEÑO_TRABAJO_EN_SU_MOMENTO) {
+
+            Pdf::view('pdf.CertificadoAdquisicion', ['paja' => $pajaAgua])->save($filePath);
+
+        }
+
 
         $publicPath = Storage::url('public/certificados/' . $filename);
 

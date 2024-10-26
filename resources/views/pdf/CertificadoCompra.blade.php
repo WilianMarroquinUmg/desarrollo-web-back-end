@@ -16,7 +16,11 @@
         <h2 style="text-align: center; font-size: 24px;">DECLARACIONES</h2>
 
         <p style="margin-top: 20px;">
-            I. El Sr. {{ $paja->BitacoraRegistroAnterior()->residente->nombre_completo }} declara ser propietario de la paja de agua con el número {{ $paja->correlativo }}, ubicada en {{ $paja->BitacoraRegistroAnterior()->direccion->nombre }}. La legitimidad de esta operación está acreditada mediante el documento emitido el {{ $paja->BitacoraRegistroAnterior()->fecha_registro }}, avalado por el COCODE comunitario, representado por el Sr. {{ $paja->BitacoraRegistroAnterior()->userTransacciona->nombre_completo }}.
+            I. El Sr. {{ $paja->BitacoraRegistroAnterior()->residente->nombre_completo }} declara ser propietario de la
+            paja de agua con el número {{ $paja->correlativo }}, ubicada en {{ $paja->BitacoraRegistroAnterior()->direccion->nombre }}.
+            La legitimidad de esta operación está acreditada mediante el documento emitido el
+            {{ $paja->BitacoraRegistroAnterior()->fecha_registro }}, avalado por el COCODE comunitario,
+            representado por el Sr. {{ $paja->BitacoraRegistroAnterior()->userTransacciona->nombre_completo }}.
         </p>
 
         <p style="margin-top: 20px;">

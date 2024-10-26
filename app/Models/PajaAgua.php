@@ -45,7 +45,7 @@ class PajaAgua extends Model
 
     public function BitacoraRegistroAnterior()
     {
-        return $this->bitacoras->count() > 1 ? $this->bitacoras->reverse()->values()->get(1) : null;
+        return $this->Bitacoras()->count() > 1 ? $this->Bitacoras()->latest()->skip(1)->first() : null;
 
     }
 
