@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Browsershot\Browsershot;
 use Spatie\LaravelPdf\Facades\Pdf;
 
 class PajaAguaApiController extends AppBaseController
@@ -222,6 +223,71 @@ class PajaAguaApiController extends AppBaseController
 
         return $this->sendResponse([$publicPath], 'Certificado generado correctamente');
     }
+
+    public function getCertificadoOtro($id)
+    {
+        /**
+         * @var PajaAgua $pajaAgua
+         */
+        $pajaAgua = PajaAgua::find($id);
+
+        if (!$pajaAgua) {
+            return response()->json(['error' => 'Paja de agua no encontrada'], 404);
+        }
+
+        $directory = storage_path('app/public/certificados');
+        $filename = 'certificado_' . $pajaAgua->BitacoraRegistroActual()->id . '.pdf';
+        $filePath = $directory . '/' . $filename;
+
+        if (!file_exists($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
+        switch ($pajaAgua->BitacoraRegistroActual()->transaccion_id) {
+            case TipoAdquisicion::COMPRA:
+                Browsershot::html(view('pdf.CertificadoCompra', ['paja' => $pajaAgua])->render())
+                    ->setNodeBinary('/usr/bin/node') // Ruta de Node.js
+                    ->setNpmBinary('/usr/bin/npm') // Ruta de NPM
+                    ->setChromePath('/usr/bin/chromium-browser') // Ruta de Chromium
+                    ->save($filePath); // Guarda el archivo PDF en el path correcto
+                break;
+
+            case TipoAdquisicion::HERENCIA:
+                Browsershot::html(view('pdf.CertificadoHerencia', ['paja' => $pajaAgua])->render())
+                    ->setNodeBinary('/usr/bin/node') // Ruta de Node.js
+                    ->setNpmBinary('/usr/bin/npm') // Ruta de NPM
+                    ->setChromePath('/usr/bin/chromium-browser') // Ruta de Chromium
+                    ->save($filePath);
+                break;
+
+            case TipoAdquisicion::DONACION:
+                Browsershot::html(view('pdf.CertificadoDonacion', ['paja' => $pajaAgua])->render())
+                    ->setNodeBinary('/usr/bin/node') // Ruta de Node.js
+                    ->setNpmBinary('/usr/bin/npm') // Ruta de NPM
+                    ->setChromePath('/usr/bin/chromium-browser') // Ruta de Chromium
+                    ->save($filePath);
+                break;
+
+            case TipoAdquisicion::PRIMER_DUEÑO_TRABAJO_EN_SU_MOMENTO:
+                Browsershot::html(view('pdf.CertificadoAdquisicion', ['paja' => $pajaAgua])->render())
+                    ->setNodeBinary('/usr/bin/node') // Ruta de Node.js
+                    ->setNpmBinary('/usr/bin/npm') // Ruta de NPM
+                    ->setChromePath('/usr/bin/chromium-browser') // Ruta de Chromium
+                    ->save($filePath);
+                break;
+
+            default:
+                return response()->json(['error' => 'Transacción no válida'], 400);
+        }
+
+        $publicPath = Storage::url('public/certificados/' . $filename);
+
+        return $this->sendResponse([$publicPath], 'Certificado generado correctamente');
+    }
+
+
+
+
 
 
 }

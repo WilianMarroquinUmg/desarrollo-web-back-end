@@ -39,6 +39,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('paja-aguas/get/certificado/{id}', 'App\Http\Controllers\API\PajaAguaApiController@getCertificado');
 
+    Route::get('paja-aguas/get/certificado/otro/{id}', 'App\Http\Controllers\API\PajaAguaApiController@getCertificadoOtro');
+
 });
 
 
