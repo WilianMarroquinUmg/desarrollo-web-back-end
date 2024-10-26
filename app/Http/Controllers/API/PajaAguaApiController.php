@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Controllers\Controller;
 use App\Models\PajaAgua;
+use App\Models\PajaAguaBitacora;
 use App\Models\Residente;
 
 use App\Models\TipoAdquisicion;
@@ -290,6 +291,53 @@ class PajaAguaApiController extends AppBaseController
         $publicPath = Storage::url('certificados/' . $filename);
 
         return $this->sendResponse([$publicPath], 'Certificado generado correctamente');
+    }
+
+    public function getDataGraficaPastel()
+    {
+        $pajaAguas = PajaAgua::all();
+
+        $contadorCompra = 0;
+        $contadorHerencia = 0;
+        $contadorDonacion = 0;
+        $contadorPrimerDueno = 0;
+
+        foreach ($pajaAguas as $paja) {
+            if ($paja->BitacoraRegistroActual()->transaccion_id == TipoAdquisicion::COMPRA) {
+                $contadorCompra++;
+            }
+            if ($paja->BitacoraRegistroActual()->transaccion_id == TipoAdquisicion::HERENCIA) {
+                $contadorHerencia++;
+            }
+            if ($paja->BitacoraRegistroActual()->transaccion_id == TipoAdquisicion::DONACION) {
+                $contadorDonacion++;
+            }
+            if ($paja->BitacoraRegistroActual()->transaccion_id == TipoAdquisicion::PRIMER_DUEÑO_TRABAJO_EN_SU_MOMENTO) {
+                $contadorPrimerDueno++;
+            }
+        }
+
+        $data = [$contadorCompra, $contadorHerencia, $contadorDonacion, $contadorPrimerDueno];
+
+        return $this->sendResponse($data, 'Datos para gráfica de pastel recuperados correctamente');
+
+    }
+
+    public function getTransaccionesRecientes()
+    {
+        $pajaAguas = PajaAguaBitacora::with(['residente', 'transaccion'])
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+
+        if (!$pajaAguas) {
+
+            return $this->sendError('No existe registro en la base de datos');
+
+        }
+
+        return $this->sendResponse($pajaAguas, 'Transacciones recientes recuperadas correctamente');
+
     }
 
 
