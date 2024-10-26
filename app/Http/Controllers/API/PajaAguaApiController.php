@@ -193,13 +193,19 @@ class PajaAguaApiController extends AppBaseController
             mkdir($directory, 0755, true);
         }
 
-        if($pajaAgua->BitacoraRegistroActual()->transaccion_id == TipoAdquisicion::COMPRA){
+        if ($pajaAgua->BitacoraRegistroActual()->transaccion_id == TipoAdquisicion::COMPRA) {
 
             Pdf::view('pdf.CertificadoCompra', ['paja' => $pajaAgua])->save($filePath);
 
         }
 
-        if($pajaAgua->BitacoraRegistroActual()->transaccion_id == TipoAdquisicion::DONACION){
+        if ($pajaAgua->BitacoraRegistroActual()->transaccion_id == TipoAdquisicion::HERENCIA) {
+
+            Pdf::view('pdf.CertificadoHerencia', ['paja' => $pajaAgua])->save($filePath);
+
+        }
+
+        if ($pajaAgua->BitacoraRegistroActual()->transaccion_id == TipoAdquisicion::DONACION) {
 
             Pdf::view('pdf.CertificadoDonacion', ['paja' => $pajaAgua])->save($filePath);
 
@@ -210,7 +216,6 @@ class PajaAguaApiController extends AppBaseController
 
         return $this->sendResponse([$publicPath], 'Certificado generado correctamente');
     }
-
 
 
 }
