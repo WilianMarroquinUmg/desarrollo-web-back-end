@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreign(['prioridad_id'], 'fk_tareas_tarea_prioridades1')->references(['id'])->on('tarea_prioridades')->onUpdate('no action')->onDelete('no action');
             $table->foreign(['recordatorio_id'], 'fk_tareas_tarea_tiempo_recordatorios1')->references(['id'])->on('tarea_tiempo_recordatorios')->onUpdate('no action')->onDelete('no action');
             $table->foreign(['tipo_id'], 'fk_tareas_tarea_tipos1')->references(['id'])->on('tarea_tipos')->onUpdate('no action')->onDelete('no action');
+            $table->foreign(['user_id'], 'fk_tareas_users1')->references(['id'])->on('users')->onUpdate('no action')->onDelete('no action');
         });
     }
 
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->dropForeign('fk_tareas_tarea_prioridades1');
             $table->dropForeign('fk_tareas_tarea_tiempo_recordatorios1');
             $table->dropForeign('fk_tareas_tarea_tipos1');
+            $table->dropForeign('fk_tareas_users1');
         });
     }
 };

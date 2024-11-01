@@ -47,6 +47,8 @@ class TareaApiController extends AppBaseController
 
         $input['estado_id'] = TareaEstado::PENDIENTE;
 
+        $input['user_id'] = $request->user()->id;
+
         $tar = Tarea::create($input);
 
         return $this->sendResponse($tar->toArray(), 'Tarea saved successfully');

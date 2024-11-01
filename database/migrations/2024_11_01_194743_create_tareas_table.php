@@ -17,10 +17,11 @@ return new class extends Migration
             $table->date('fecha_ejecucion');
             $table->time('hora_ejecucion');
             $table->text('descripcion')->nullable();
-            $table->unsignedInteger('estado_id')->index('fk_tareas_tarea_estados1_idx');
-            $table->unsignedInteger('tipo_id')->index('fk_tareas_tarea_tipos1_idx');
-            $table->unsignedInteger('recordatorio_id')->index('fk_tareas_tarea_tiempo_recordatorios1_idx');
-            $table->unsignedInteger('prioridad_id')->index('fk_tareas_tarea_prioridades1_idx');
+            $table->unsignedInteger('estado_id')->index('fk_tareas_tarea_estados1_idx')->nullable();
+            $table->unsignedInteger('tipo_id')->index('fk_tareas_tarea_tipos1_idx')->nullable();
+            $table->unsignedInteger('recordatorio_id')->index('fk_tareas_tarea_tiempo_recordatorios1_idx')->nullable();
+            $table->unsignedInteger('prioridad_id')->index('fk_tareas_tarea_prioridades1_idx')->nullable();
+            $table->unsignedBigInteger('user_id')->index('fk_tareas_users1_idx')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
