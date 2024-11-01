@@ -10,6 +10,7 @@ class TareaEstado extends Model
     use HasFactory;
 
     CONST PENDIENTE = 1;
+    CONST CUMPLIDA = 2;
 
     protected $table = 'tarea_estados';
 

@@ -21,7 +21,8 @@ class TareaApiController extends AppBaseController
             'prioridad',
             'tipo',
             'recordatorio',
-        ])->get();
+        ])->orderBy('updated_at', 'desc')
+            ->get();
 
         return $this->sendResponse($tar->toArray(), 'Tareas retrieved successfully');
 
@@ -121,4 +122,21 @@ class TareaApiController extends AppBaseController
         return $this->sendResponse([], 'Tarea deleted successfully');
 
     }
+
+    public function cumplir($id)
+    {
+        /** @var Tarea $tar */
+        $tar = Tarea::find($id);
+
+        if (empty($tar)) {
+            return $this->sendError('Tarea not found');
+        }
+
+        $tar->estado_id = TareaEstado::CUMPLIDA;
+        $tar->save();
+
+        return $this->sendResponse($tar->toArray(), 'Tarea cumplida');
+
+    }
+
 }
