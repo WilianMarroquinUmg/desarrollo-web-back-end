@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Controllers\Controller;
 use App\Models\Tarea;
+use App\Models\TareaEstado;
 use Illuminate\Http\Request;
 
 class TareaApiController extends AppBaseController
@@ -15,7 +16,12 @@ class TareaApiController extends AppBaseController
     public function index()
     {
 
-        $tar = Tarea::all();
+        $tar = Tarea::with([
+            'estado',
+            'prioridad',
+            'tipo',
+            'recordatorio',
+        ])->get();
 
         return $this->sendResponse($tar->toArray(), 'Tareas retrieved successfully');
 
@@ -35,7 +41,10 @@ class TareaApiController extends AppBaseController
     public function store(Request $request)
     {
 
+
         $input = $request->all();
+
+        $input['estado_id'] = TareaEstado::PENDIENTE;
 
         $tar = Tarea::create($input);
 
@@ -49,7 +58,11 @@ class TareaApiController extends AppBaseController
     {
 
         /** @var Tarea $tar */
-        $tar = Tarea::find($id);
+        $tar = Tarea::with([
+            'prioridad',
+            'tipo',
+            'recordatorio',
+        ])->find($id);
 
         if (empty($tar)) {
             return $this->sendError('Tarea not found');

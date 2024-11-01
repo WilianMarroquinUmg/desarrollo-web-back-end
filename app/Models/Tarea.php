@@ -14,25 +14,34 @@ class Tarea extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
-        'tarea_estados_id',
-        'tarea_prioridades_id',
-        'tarea_tipos_id'
+        'fecha_ejecucion',
+        'hora_ejecucion',
+        'estado_id',
+        'prioridad_id',
+        'tipo_id',
+        'recordatorio_id',
     ];
 
-    public function tareaEstado()
+    public function estado()
     {
-        return $this->belongsTo(TareaEstado::class, 'tarea_estados_id');
+        return $this->belongsTo(TareaEstado::class, 'estado_id');
     }
 
-    public function tareaPrioridad()
+    public function prioridad()
     {
-        return $this->belongsTo(TareaPrioridad::class, 'tarea_prioridades_id');
+        return $this->belongsTo(TareaPrioridad::class, 'prioridad_id');
     }
 
-    public function tareaTipo()
+    public function tipo()
     {
-        return $this->belongsTo(TareaTipo::class, 'tarea_tipos_id');
+        return $this->belongsTo(TareaTipo::class, 'tipo_id');
+    }
+
+    public function recordatorio()
+    {
+        return $this->belongsTo(TareaTiempoRecordatorio::class, 'recordatorio_id');
     }
 
 
 }
+
