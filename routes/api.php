@@ -45,6 +45,19 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('paja-aguas/get/transacciones/recientes', 'App\Http\Controllers\API\PajaAguaApiController@getTransaccionesRecientes');
 
+    Route::apiResource('tarea-tipos', \App\Http\Controllers\Api\TareaTipoApiController::class);
+
+    Route::apiResource('tarea-estados', \App\Http\Controllers\Api\TareaEstadoApiController::class);
+
+    Route::apiResource('tarea-prioridades', \App\Http\Controllers\Api\TareaPrioridadApiController::class);
+
+    Route::apiResource('tareas', \App\Http\Controllers\Api\TareaApiController::class);
+
+
+
+
+
+
 });
 
 
