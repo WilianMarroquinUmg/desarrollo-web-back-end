@@ -23,7 +23,7 @@ class TareaApiController extends AppBaseController
             'prioridad',
             'tipo',
             'recordatorio',
-        ])->orderBy('updated_at', 'desc')
+        ])->orderBy('updated_at', 'asc')
             ->get();
 
         return $this->sendResponse($tar->toArray(), 'Tareas retrieved successfully');
