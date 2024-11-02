@@ -15,16 +15,25 @@ class TareaApiController extends AppBaseController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $tar = Tarea::with([
+        $tarea = Tarea::query();
+
+        if($request->cumplidas){
+
+            $tarea->where('estado_id', TareaEstado::CUMPLIDA);
+
+        }
+
+        $tarea->with([
             'estado',
             'prioridad',
             'tipo',
             'recordatorio',
-        ])->orderBy('updated_at', 'asc')
-            ->get();
+        ])->orderBy('updated_at', 'asc');
+
+        $tar = $tarea->get();
 
         return $this->sendResponse($tar->toArray(), 'Tareas retrieved successfully');
 
