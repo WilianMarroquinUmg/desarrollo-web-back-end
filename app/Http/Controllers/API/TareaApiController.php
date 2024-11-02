@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Controllers\Controller;
+use App\Mail\MiCorreo;
 use App\Models\Tarea;
 use App\Models\TareaEstado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class TareaApiController extends AppBaseController
 {
@@ -139,6 +141,18 @@ class TareaApiController extends AppBaseController
 
         return $this->sendResponse($tar->toArray(), 'Tarea cumplida');
 
+    }
+
+
+    public function enviarCorreo()
+    {
+
+        $tarea = Tarea::find(1);
+
+
+        Mail::to('wmarroquinm3@miumg.edu.gt')->send(new MiCorreo($tarea));
+
+        return $this->sendResponse([], 'Correo enviado correctamente');
     }
 
 }
