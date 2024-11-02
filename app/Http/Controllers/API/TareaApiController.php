@@ -20,11 +20,31 @@ class TareaApiController extends AppBaseController
 
         $tarea = Tarea::query();
 
-        if($request->cumplidas){
+        $tarea->where('estado_id', TareaEstado::PENDIENTE);
 
-            $tarea->where('estado_id', TareaEstado::CUMPLIDA);
+        $tarea->where('user_id', $request->user()->id);
 
-        }
+        $tarea->with([
+            'estado',
+            'prioridad',
+            'tipo',
+            'recordatorio',
+        ])->orderBy('updated_at', 'asc');
+
+        $tar = $tarea->get();
+
+        return $this->sendResponse($tar->toArray(), 'Tareas retrieved successfully');
+
+    }
+
+    public function indexCumplidas(Request $request)
+    {
+
+        $tarea = Tarea::query();
+
+        $tarea->where('estado_id', TareaEstado::CUMPLIDA);
+
+        $tarea->where('user_id', $request->user()->id);
 
         $tarea->with([
             'estado',
