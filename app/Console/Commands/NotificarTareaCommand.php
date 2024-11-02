@@ -2,10 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\MiCorreo;
 use App\Models\Tarea;
 use App\Models\TareaEstado;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class NotificarTareaCommand extends Command
 {
@@ -42,7 +44,8 @@ class NotificarTareaCommand extends Command
                 $minutosDiferencia = (int)$horaActual->diffInMinutes($fechaHoraEjecucion);
 
                 if ($minutosDiferencia === $tarea->recordatorio->valor) {
-                    $this->info('Notificar tarea: ' . $tarea->nombre);
+
+                    Mail::to($tarea->user->email)->send(new MiCorreo($tarea));
                 }
             }
         }

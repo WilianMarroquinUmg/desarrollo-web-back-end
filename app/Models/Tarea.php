@@ -20,6 +20,7 @@ class Tarea extends Model
         'prioridad_id',
         'tipo_id',
         'recordatorio_id',
+        'user_id',
     ];
 
     public function estado()
@@ -40,6 +41,11 @@ class Tarea extends Model
     public function recordatorio()
     {
         return $this->belongsTo(TareaTiempoRecordatorio::class, 'recordatorio_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 

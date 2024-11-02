@@ -144,15 +144,4 @@ class TareaApiController extends AppBaseController
     }
 
 
-    public function enviarCorreo()
-    {
-
-        $tarea = Tarea::find(1);
-
-
-        Mail::to('wmarroquinm3@miumg.edu.gt')->send(new MiCorreo($tarea));
-
-        return $this->sendResponse([], 'Correo enviado correctamente');
-    }
-
 }

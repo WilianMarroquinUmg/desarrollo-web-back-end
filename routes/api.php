@@ -58,10 +58,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('tarea-cumplir/{id}', [\App\Http\Controllers\Api\TareaApiController::class, 'cumplir']);
 
 
-    Route::get('enviar-correo', [\App\Http\Controllers\Api\TareaApiController::class, 'enviarCorreo']);
-
-
-
 
 });
 
