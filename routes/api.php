@@ -45,17 +45,17 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('paja-aguas/get/transacciones/recientes', 'App\Http\Controllers\API\PajaAguaApiController@getTransaccionesRecientes');
 
-    Route::apiResource('tarea-tipos', 'App\Http\Controllers\Api\TareaTipoApiController');
+    Route::apiResource('tarea-tipos', 'App\Http\Controllers\API\TareaTipoApiController');
 
-    Route::apiResource('tarea-estados', 'App\Http\Controllers\Api\TareaEstadoApiController');
+    Route::apiResource('tarea-estados', 'App\Http\Controllers\API\TareaEstadoApiController');
 
-    Route::apiResource('tarea-tiempo-estimados', 'App\Http\Controllers\Api\TareaTiempoEstimadoApiController');
+    Route::apiResource('tarea-tiempo-estimados', 'App\Http\Controllers\API\TareaTiempoEstimadoApiController');
 
-    Route::apiResource('tarea-tiempo-recordatorios', 'App\Http\Controllers\Api\TareaTiempoRecordatorioApiController');
+    Route::apiResource('tarea-tiempo-recordatorios', 'App\Http\Controllers\API\TareaTiempoRecordatorioApiController');
 
-    Route::apiResource('tareas', 'App\Http\Controllers\Api\TareaApiController');
+    Route::apiResource('tareas', 'App\Http\Controllers\API\TareaApiController');
 
-    Route::get('tarea-cumplir/{id}', [App\Http\Controllers\Api\TareaApiController::class, 'cumplir']);
+    Route::get('tarea-cumplir/{id}', [App\Http\Controllers\API\TareaApiController::class, 'cumplir']);
 
 
 
