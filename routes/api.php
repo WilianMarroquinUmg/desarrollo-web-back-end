@@ -51,6 +51,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::apiResource('tarea-tiempo-estimados', 'App\Http\Controllers\API\TareaTiempoEstimadoApiController');
 
+    Route::apiResource('tarea-prioridades', 'App\Http\Controllers\API\TareaPrioridadApiController');
+
     Route::apiResource('tarea-tiempo-recordatorios', 'App\Http\Controllers\API\TareaTiempoRecordatorioApiController');
 
     Route::apiResource('tareas', 'App\Http\Controllers\API\TareaApiController');
