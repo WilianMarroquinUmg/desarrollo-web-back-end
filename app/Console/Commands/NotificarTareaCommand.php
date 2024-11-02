@@ -45,6 +45,7 @@ class NotificarTareaCommand extends Command
 
                 if ($minutosDiferencia === $tarea->recordatorio->valor) {
 
+
                     Mail::to($tarea->user->email)->send(new MiCorreo($tarea));
                 }
             }
