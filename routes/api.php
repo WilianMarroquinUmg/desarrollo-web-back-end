@@ -61,8 +61,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('tarea/cumplidas', [App\Http\Controllers\API\TareaApiController::class, 'indexCumplidas']);
 
-
-
 });
+
+Route::resource('reservaciones', 'App\Http\Controllers\API\ReservacionApiController');
+
+Route::resource('servicio-reservaciones', 'App\Http\Controllers\API\ServicioReservacionApiController');
+
+Route::resource('tipo-servicios', 'App\Http\Controllers\API\TipoServicioApiController');
 
 
