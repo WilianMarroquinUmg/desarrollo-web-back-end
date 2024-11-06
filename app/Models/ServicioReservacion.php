@@ -20,4 +20,14 @@ class ServicioReservacion extends Model
         'descripcion',
     ];
 
+    public function reservacion()
+    {
+        return $this->belongsTo(Reservacion::class, 'id_reservacion');
+    }
+
+    public function tipo()
+    {
+        return $this->belongsTo(TipoServicio::class, 'id_tipo_servicio');
+    }
+
 }

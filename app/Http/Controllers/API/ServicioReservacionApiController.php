@@ -15,7 +15,7 @@ class ServicioReservacionApiController extends AppBaseController
     public function index()
     {
 
-        $servicioReservaciones = ServicioReservacion::all();
+        $servicioReservaciones = ServicioReservacion::with(['reservacion', 'tipo'])->get();
 
         return $this->sendResponse($servicioReservaciones->toArray(), 'Servicio Reservaciones retrieved successfully');
 
