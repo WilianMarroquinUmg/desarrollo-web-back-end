@@ -1,0 +1,48 @@
+#version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel-app-pajas
+    volumes:
+      - .:/var/www/html
+    networks:
+      - laravel-network
+    depends_on:
+      - db
+    entrypoint: /bin/bash -c "sleep 10 && php artisan migrate && php-fpm"
+
+  nginx:
+    image: nginx:latest  # La imagen oficial de Nginx suele ser compatible con ARM64
+    container_name: nginx-server-pajas
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - .:/var/www/html
+    ports:
+      - "80:80"
+    networks:
+      - laravel-network
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8  # La imagen oficial de MySQL 5.7 es compatible con ARM64
+    container_name: mysql-db-pajas
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: laravel_db
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - laravel-network
+    ports:
+      - "3306:3306"
+
+networks:
+  laravel-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
